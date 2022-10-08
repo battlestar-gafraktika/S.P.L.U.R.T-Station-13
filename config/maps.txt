@@ -15,8 +15,10 @@ Format:
 	disabled (disables the map)
 endmap
 
-map boxstation
+map frakstation
 	default
+
+map boxstation
 	#voteweight 1.5
 endmap
 
