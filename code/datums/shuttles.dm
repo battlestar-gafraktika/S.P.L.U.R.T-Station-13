@@ -663,6 +663,10 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+	
+/datum/map_template/shuttle/arrival/frak
+	suffix = "frak"
+	name = "arrival shuttle (Frak)"
 
 /datum/map_template/shuttle/arrival/cog
 	suffix = "cog"

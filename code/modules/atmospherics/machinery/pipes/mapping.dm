@@ -58,6 +58,7 @@ HELPER(violet, rgb(64, 0, 128))
 HELPER_NAMED(scrubbers, "scrubbers pipe", rgb(255, 0, 0))
 HELPER_NAMED(supply, "air supply pipe", rgb(0, 0, 255))
 HELPER_NAMED(supplymain, "main air supply pipe", rgb(130, 43, 255))
+HELPER_NAMED(scrubbersmain, "main scrubbers pipe", rgb(204,136,153)) //splurt13 :)
 
 #undef HELPER_NAMED
 #undef HELPER

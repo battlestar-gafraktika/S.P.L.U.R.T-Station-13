@@ -344,6 +344,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
+		"puce" = rgb(204,136,153), //splurt-scrubbersmain
 		"blue" = rgb(0,0,255),
 		"brown" = rgb(178,100,56),
 		"cyan" = rgb(0,255,249),
