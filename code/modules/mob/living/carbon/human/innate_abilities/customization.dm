@@ -117,7 +117,7 @@
 		if(new_snout)
 			H.dna.features["mam_snouts"] = new_snout
 		H.update_body()
-
+		
 	else if (select_alteration == "Wings")
 		var/new_color = input(owner, "Choose your wing color:", "Race change","#"+H.dna.features["wings_color"]) as color|null
 		if(new_color)

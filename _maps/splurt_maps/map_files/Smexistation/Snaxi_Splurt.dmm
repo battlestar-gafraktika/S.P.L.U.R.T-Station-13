@@ -3089,7 +3089,7 @@
 /turf/closed/wall,
 /area/maintenance/aft)
 "aIt" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/carpet/orange,
@@ -20758,7 +20758,7 @@
 /turf/open/floor/wood,
 /area/command/corporate_showroom)
 "hCp" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/carpet/orange,
@@ -24567,7 +24567,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/computer/bounty,
+/obj/machinery/piratepad/civilian,
 /turf/open/floor/plasteel,
 /area/cargo/storage)
 "jjA" = (
@@ -57671,7 +57671,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "xEf" = (
-/obj/machinery/computer/bounty{
+/obj/machinery/piratepad/civilian{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{

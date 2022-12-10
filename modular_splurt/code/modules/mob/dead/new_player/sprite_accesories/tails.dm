@@ -1,5 +1,3 @@
-//Hyper tails
-
 //Mam tails
 /datum/sprite_accessory/tails/mam_tails/deer
 	name = "Deer"
@@ -225,6 +223,18 @@
 	icon = 'modular_splurt/icons/mob/mam_tails.dmi'
 	color_src = MUTCOLORS
 
+/datum/sprite_accessory/tails/mam_tails/fluffy
+	name = "Fluffy tail"
+	icon = 'modular_splurt/icons/mob/mam_tails.dmi'
+	icon_state = "fluffy"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/tails_animated/mam_tails_animated/fluffy
+	name = "Fluffy tail"
+	icon = 'modular_splurt/icons/mob/mam_tails.dmi'
+	icon_state = "fluffy"
+	color_src = MUTCOLORS
+
 //Lizard tails
 /datum/sprite_accessory/tails/lizard/tailmaw
 	name = "Tailmaw"
@@ -331,4 +341,20 @@
 	name = "Succubus tail"
 	icon = 'modular_splurt/icons/mob/mam_tails.dmi'
 	icon_state = "succubus"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/tails/mam_tails/kangaroo/alt
+	name = "kangaroo (alt)"
+	icon = 'modular_splurt/icons/mob/64_mam_tails.dmi'
+	icon_state = "kangaroo"
+	dimension_x = 64
+	center = TRUE
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/tails_animated/mam_tails_animated/kangaroo/alt
+	name = "kangaroo (alt)"
+	icon = 'modular_splurt/icons/mob/64_mam_tails.dmi'
+	icon_state = "kangaroo"
+	dimension_x = 64
+	center = TRUE
 	color_src = MUTCOLORS
