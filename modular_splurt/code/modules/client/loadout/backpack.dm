@@ -105,3 +105,4 @@
 /datum/gear/backpack/shockcollar
 	name = "Shock collar"
 	path = /obj/item/electropack/shockcollar
+	cost = 3
