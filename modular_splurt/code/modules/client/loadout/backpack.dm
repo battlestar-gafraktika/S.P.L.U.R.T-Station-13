@@ -101,3 +101,7 @@
 /datum/gear/backpack/towel
 	name = "Towel"
 	path = /obj/item/reagent_containers/rag/towel
+
+/datum/gear/backpack/shockcollar
+	name = "Shock collar"
+	path = /obj/item/electropack/shockcollar
