@@ -66,27 +66,20 @@
 		speech_args[SPEECH_MESSAGE] = message
 
 //Own stuff
-/datum/quirk/no_clone
-	name = "DNC"
-	desc = "You have filed a Do Not Clone order, stating that you do not wish to be cloned. You can still be revived by other means."
-	value = -2
-	mob_trait = TRAIT_NO_CLONE
-	medical_record_text = "Patient has a DNC (Do not clone) order on file, and cannot be cloned as a result."
-
 /datum/quirk/no_guns
 	name = "Fat-Fingered"
-	desc = "Due to the shape of your hands, width of your fingers or just not having fingers at all, you're unable to fire the majority of guns."
+	desc = "Due to the shape of your hands, width of your fingers or just not having fingers at all, you're unable to fire guns without accommodation."
 	value = -2
 	mob_trait = TRAIT_CHUNKYFINGERS
-	gain_text = "<span class='notice'>Your fingers feel.. thick.</span>"
-	lose_text = "<span class='notice'>Your fingers feel normal again.</span>"
+	gain_text = span_notice("Your fingers feel... thick.")
+	lose_text = span_notice("Your fingers feel normal again.")
 
 /datum/quirk/illiterate
 	name = "Illiterate"
 	desc = "You can't read nor write, plain and simple."
 	value = -1
 	mob_trait = TRAIT_ILLITERATE
-	gain_text = "<span class='notice'>The knowledge of how to read seems to escape from you.</span>"
+	gain_text = span_notice("The knowledge of how to read seems to escape from you.")
 	lose_text = "<span class='notice'>Written words suddenly make sense again."
 
 /datum/quirk/flimsy
@@ -109,8 +102,8 @@
 	name = "Hypersensitive"
 	desc = "For better or worse, everything seems to affect your mood more than it should."
 	value = -1
-	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
-	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
+	gain_text = span_danger("You seem to make a big deal out of everything.")
+	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
 	mood_quirk = TRUE //yogs
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
 
@@ -126,69 +119,106 @@
 	if(mood)
 		mood.mood_modifier -= 0.5
 
-/datum/quirk/masked_mook
-	name = "Bane Syndrome"
-	desc = "For some reason you don't feel well without wearing some kind of gas mask."
-	gain_text = "<span class='danger'>You start feeling unwell without any gas mask on.</span>"
-	lose_text = "<span class='notice'>You no longer have a need to wear some gas mask.</span>"
-	value = -2
-	mood_quirk = TRUE
-	medical_record_text = "Patient feels more secure when wearing a gas mask."
-	processing_quirk = TRUE
-	var/mood_category = "masked_mook"
-
-/datum/quirk/masked_mook/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/mask/gas/gasmask = H.get_item_by_slot(ITEM_SLOT_MASK)
-	if(istype(gasmask))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, mood_category, /datum/mood_event/masked_mook)
-	else
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, mood_category, /datum/mood_event/masked_mook_incomplete)
-
-/datum/quirk/masked_mook/on_spawn()
-	. = ..()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/mask/gas/gasmask = new(get_turf(quirk_holder))
-	H.equip_to_slot(gasmask, ITEM_SLOT_MASK)
-	H.regenerate_icons()
+// masked_mook moved to neutral
 
 //well-trained moved to neutral
 
 /datum/quirk/dumb4cum
 	name = "Dumb For Cum"
-	desc = "You just like cum, it's heat, it's smell, it's... Taste."
+	desc = "For one reason or another, you're totally obsessed with seminal fluids. The heat of it, the smell... the taste... It's quite simply euphoric."
 	value = 0
-	gain_text = "<span class='notice'>You suddenly start craving some seed inside of you.<span>"
-	lose_text = "<span class='danger'>It didn't even taste that good, really!</span>"
-	medical_record_text = "Patient seems to drool for seminal fluid."
-	var/craving_after = 15 MINUTES
+	mob_trait = TRAIT_DUMB_CUM
+	gain_text = span_notice("You feel an insatiable craving for seminal fluids.")
+	lose_text = span_notice("Cum didn't even taste that good, anyways.")
+	medical_record_text = "Patient seems to have an unhealthy psychological obsession with seminal fluids."
+	mood_quirk = TRUE
 	var/timer
+	var/timer_trigger = 15 MINUTES
 
-/datum/quirk/dumb4cum/on_spawn()
-	. = ..()
-	timer = addtimer(CALLBACK(src, .proc/crave), craving_after, TIMER_STOPPABLE)
+/datum/quirk/dumb4cum/add()
+	// Set timer
+	timer = addtimer(CALLBACK(src, .proc/crave), timer_trigger, TIMER_STOPPABLE)
+
+/datum/quirk/dumb4cum/remove()
+	// Remove status trait
+	REMOVE_TRAIT(quirk_holder, TRAIT_DUMB_CUM_CRAVE, DUMB_CUM_TRAIT)
+
+	// Remove penalty traits
+	REMOVE_TRAIT(quirk_holder, TRAIT_ILLITERATE, DUMB_CUM_TRAIT)
+	REMOVE_TRAIT(quirk_holder, TRAIT_DUMB, DUMB_CUM_TRAIT)
+	REMOVE_TRAIT(quirk_holder, TRAIT_PACIFISM, DUMB_CUM_TRAIT)
+
+	// Remove mood event
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, QMOOD_DUMB_CUM)
+
+	// Remove timer
+	deltimer(timer)
 
 /datum/quirk/dumb4cum/proc/crave()
-	var/list/hungry_phrases = list(
-									"Your stomach rumbles a bit and cum comes to your mind.",\
-									"Urgh, you really should get some cum...",\
-									"Some jizz wouldn't sit bad right now!",\
-									"You're starting to long for more cum."
-								  )
-	to_chat(quirk_holder, "<span class='love'>[pick(hungry_phrases)]</span>")
-
+	// Check if conscious
 	if(quirk_holder.stat == CONSCIOUS)
+		// Display emote
 		quirk_holder.emote("sigh")
-	//ADD_TRAIT(quirk_holder, TRAIT_PACIFISM, type)
-	ADD_TRAIT(quirk_holder, TRAIT_DUMB4CUM, type)
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "cum_craving", /datum/mood_event/cum_craving)
+
+		// Define list of phrases
+		var/list/trigger_phrases = list(
+										"Your stomach rumbles a bit and cum comes to your mind.",\
+										"Urgh, you should really get some cum...",\
+										"Some jizz wouldn't be so bad right now!",\
+										"You're starting to long for some more cum..."
+									  )
+		// Alert user in chat
+		to_chat(quirk_holder, span_love("[pick(trigger_phrases)]"))
+
+	// Add active status trait
+	ADD_TRAIT(quirk_holder, TRAIT_DUMB_CUM_CRAVE, DUMB_CUM_TRAIT)
+
+	// Add illiterate, dumb, and pacifist
+	ADD_TRAIT(quirk_holder, TRAIT_ILLITERATE, DUMB_CUM_TRAIT)
+	ADD_TRAIT(quirk_holder, TRAIT_DUMB, DUMB_CUM_TRAIT)
+	ADD_TRAIT(quirk_holder, TRAIT_PACIFISM, DUMB_CUM_TRAIT)
+
+	// Add negative mood effect
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, QMOOD_DUMB_CUM, /datum/mood_event/cum_craving)
 
 /datum/quirk/dumb4cum/proc/uncrave()
-	//REMOVE_TRAIT(quirk_holder, TRAIT_PACIFISM, type)
-	REMOVE_TRAIT(quirk_holder, TRAIT_DUMB4CUM, type)
-	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "cum_craving")
-	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "cum_stuffed", /datum/mood_event/cum_stuffed)
+	// Remove active status trait
+	REMOVE_TRAIT(quirk_holder, TRAIT_DUMB_CUM_CRAVE, DUMB_CUM_TRAIT)
 
+	// Remove penalty traits
+	REMOVE_TRAIT(quirk_holder, TRAIT_ILLITERATE, DUMB_CUM_TRAIT)
+	REMOVE_TRAIT(quirk_holder, TRAIT_DUMB, DUMB_CUM_TRAIT)
+	REMOVE_TRAIT(quirk_holder, TRAIT_PACIFISM, DUMB_CUM_TRAIT)
+
+	// Add positive mood event
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, QMOOD_DUMB_CUM, /datum/mood_event/cum_stuffed)
+
+	// Remove timer
 	deltimer(timer)
 	timer = null
-	timer = addtimer(CALLBACK(src, .proc/crave), craving_after, TIMER_STOPPABLE)
+
+	// Add new timer
+	timer = addtimer(CALLBACK(src, .proc/crave), timer_trigger, TIMER_STOPPABLE)
+
+// Small issue with this. If the quirk holder has NO_HUNGER or NO_THIRST, this trait can still be taken and they will still get the benefits of it.
+// It's unlikely that someone will be both, especially at round start, but vampirism makes me wary of having these separate.
+/datum/quirk/hungry
+	name = "Hungry And Thirsty"
+	desc = "You find yourself unusually hungry and thirsty. Gotta eat and drink twice as much as normal."
+	value = -1
+	gain_text = span_danger("You're starting to feel hungrier and thirstier a lot faster.")
+	lose_text = span_notice("Your craving for food and water begins dying down.")
+	medical_record_text = "Patient reports eating twice as many meals per day than usual for their species."
+
+/datum/quirk/hungry/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/physiology/P = H.physiology
+	P.hunger_mod *= 2
+	P.thirst_mod *= 2
+
+/datum/quirk/hungry/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/physiology/P = H.physiology
+		P.hunger_mod /= 2
+		P.thirst_mod /= 2

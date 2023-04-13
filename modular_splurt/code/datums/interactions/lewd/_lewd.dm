@@ -1,6 +1,19 @@
 /mob/living
 	var/has_belly = FALSE
 
+/mob/living/has_anus(visibility = REQUIRE_ANY)
+	if(getorganslot(ORGAN_SLOT_ANUS))
+		return has_genital(ORGAN_SLOT_ANUS, visibility)
+	. = ..()
+
+/mob/living/add_lust(add)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOB_LUST_UPDATED)
+
+/mob/living/set_lust(num)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOB_LUST_UPDATED)
+
 /mob/living/moan()
 	var/moaned = lastmoan
 	var/miming = mind ? mind?.miming : FALSE
@@ -69,7 +82,7 @@
 					if(CUM_TARGET_NIPPLE)
 						cumin = TRUE
 						if(partner.has_breasts())
-							message = "cums iside \the <b>[partner]</b>'s nipple!."
+							message = "cums inside \the <b>[partner]</b>'s nipple!."
 							target_gen = partner.getorganslot(ORGAN_SLOT_BREASTS)
 						else
 							message = "cums on \the <b>[partner]</b>'s chest and neck."
@@ -122,6 +135,7 @@
 									ass = new
 									ass.Insert(partner)
 								ass.climax_modify_size(src, getorganslot(ORGAN_SLOT_PENIS))
+
 		else
 			switch(last_genital.type)
 				if(/obj/item/organ/genital/penis)
@@ -131,7 +145,7 @@
 						if(CUM_TARGET_NIPPLE)
 							cumin = TRUE
 							if(partner.has_breasts())
-								message = "cums iside \the <b>[partner]</b>'s nipple!."
+								message = "cums inside \the <b>[partner]</b>'s nipple!."
 								target_gen = partner.getorganslot(ORGAN_SLOT_BREASTS)
 							else
 								message = "cums on \the <b>[partner]</b>'s chest and neck."
@@ -188,6 +202,10 @@
 										ass = new
 										ass.Insert(partner)
 									ass.climax_modify_size(src, last_genital)
+		if(iswendigo(partner) && partner.pulling == src)
+			var/mob/living/carbon/wendigo/W = partner
+			W.slaves |= src
+			to_chat(src, "<font color='red'> You are now [W]'s slave! Serve your master properly! </font>")
 	if(!message)
 		return ..()
 	if(gender == MALE)
@@ -204,7 +222,7 @@
 		playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/final_f1.ogg',
 							'modular_sand/sound/interactions/final_f2.ogg',
 							'modular_sand/sound/interactions/final_f3.ogg'), 70, 1, 0)
-	visible_message(message = "<span class='userlove'><b>\The [src]</b> [message]</span>", ignored_mobs = get_unconsenting())
+	visible_message(message = span_userlove("<b>\The [src]</b> [message]"), ignored_mobs = get_unconsenting())
 	multiorgasms += 1
 
 	if(multiorgasms > (get_sexual_potency() * 0.34)) //AAAAA, WE DONT WANT NEGATIVES HERE, RE
@@ -359,7 +377,7 @@
 									'modular_sand/sound/interactions/bj9.ogg',
 									'modular_sand/sound/interactions/bj10.ogg',
 									'modular_sand/sound/interactions/bj11.ogg'), 50, 1, -1)
-	visible_message(message = "<span class='lewd'><b>\The [src]</b> [message]</span>", ignored_mobs = get_unconsenting())
+	visible_message(message = span_lewd("<b>\The [src]</b> [message]"), ignored_mobs = get_unconsenting())
 	if(fucktarget != "penis" || user.can_penetrating_genital_cum())
 		user.handle_post_sex(lust_increase, CUM_TARGET_MOUTH, src)
 	lust_increase = NORMAL_LUST //RESET IT REE
@@ -381,7 +399,7 @@
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
 						'modular_sand/sound/interactions/bang3.ogg'), 70, 1, -1)
-	visible_message(message = "<span class='lewd'><b>\The [src]</b> [message]</span>", ignored_mobs = get_unconsenting())
+	visible_message(message = span_lewd("<b>\The [src]</b> [message]"), ignored_mobs = get_unconsenting())
 	handle_post_sex(NORMAL_LUST, CUM_TARGET_BREASTS, user)
 
 /*
@@ -392,7 +410,7 @@
 		to_chat(src, "<span class='warning'> You need exposed genitals!</b>")
 		return
 	if(!LAZYLEN(holder.equipment))
-		to_chat(src, "<span class='warning'>You'll have to put something in it first, since it seems to be clean</span>")
+		to_chat(src, span_warning("You'll have to put something in it first, since it seems to be clean"))
 		return
 
 	var/obj/item/gimme = input(src, "What do you want to remove?", "Remove equipment", null) as null|anything in holder.equipment
@@ -406,13 +424,13 @@
 	var/u_His = p_their()
 	var/list/belly_names = list("stomach", "belly", "gut", "midsection", "rolls")
 	var/list/nuzzles = list(
-		"rubs [u_His] face all accross [target]'s [pick(belly_names)]",
+		"rubs [u_His] face all across [target]'s [pick(belly_names)]",
 		"nuzzles [target]'s [pick(belly_names)][pick(list(" lovingly", ""))]",
 		"shoves [u_His] face into [target]'s [pick(belly_names)] and gives it kisses all over",
 		"licks right into [target]'s [pick(list("belly button", "navel"))]"
 		)
 
-	message = "<span class='lewd'><b>\The [src]</b> [pick(nuzzles)]. </span>"
+	message = span_lewd("<b>\The [src]</b> [pick(nuzzles)]. ")
 	visible_message(message, ignored_mobs = get_unconsenting())
 
 /mob/living/proc/do_bellyfuck(mob/living/partner)
@@ -431,10 +449,10 @@
 
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/champ1.ogg',
 						'modular_sand/sound/interactions/champ2.ogg'), 50, 1, -1)
-	visible_message(message = "<span class='lewd'><b>\The [src]</b> [message]</span>", ignored_mobs = get_unconsenting())
+	visible_message(message = span_lewd("<b>\The [src]</b> [message]"), ignored_mobs = get_unconsenting())
 	if(can_penetrating_genital_cum())
 		handle_post_sex(NORMAL_LUST, CUM_TARGET_BELLY, partner)
-	//partner.handle_post_sex(NORMAL_LUST, null, src) //don't think we need it fo dis one
+	//partner.handle_post_sex(NORMAL_LUST, null, src) //don't think we need it for this one
 
 /mob/living/proc/do_breastsmother(mob/living/target)
 	var/message
@@ -445,7 +463,7 @@
 		"shoves \the <b>[target]</b>'s whole head into [u_His] cleavage"
 		)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -459,7 +477,7 @@
 							"has a nice taste of \the <b>[target]</b>'s drenched body",
 							"takes a whiff of \the <b>[target]</b>'s musk and drinks [t_His] warm sweat")
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, 'modular_sand/sound/interactions/champ_fingering.ogg', 50, 1, -1)
 
@@ -473,7 +491,7 @@
 		"makes sure to squeeze \the <b>[target]</b>'s face well under [u_His] [pick(musk)] armpit and let them take a whiff"
 		)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick(
 		'modular_sand/sound/interactions/squelch1.ogg',
@@ -490,7 +508,7 @@
 		"goes face deep into \the <b>[target]</b> [pick(musk)] armpit, worshipping it with [u_His] tongue and nose"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick(
 		'modular_sand/sound/interactions/squelch1.ogg',
@@ -522,7 +540,7 @@
 			)
 		set_is_fucking(target, CUM_TARGET_ARMPIT, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b>[pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b>[pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -542,7 +560,7 @@
 		lines = list(
 			"squeezes [u_His] armpit right into \the <b>[target]</b>'s throbbing [genital_name], massaging its length using [u_His] [pick(musk)]armpit!",
 			"presses [u_His] arm down all over \the <b>[target]</b>'s leaking [genital_name], milking it with [u_His] [pick(musk)] pit!",
-			"rubs and grinds [u_His] [pick(musk)] arpit back and forth through \the <b>[target]</b>'s [genital_name], deeply squeezing it to the base!"
+			"rubs and grinds [u_His] [pick(musk)] armpit back and forth through \the <b>[target]</b>'s [genital_name], deeply squeezing it to the base!"
 		)
 	else
 		if(target.is_topless())
@@ -551,11 +569,11 @@
 			)
 		else // https://cdn.discordapp.com/attachments/802990353883070474/962478553117622322/NoName-480p.mp4
 			lines = list(
-				"softly tears a hole in the cloth on the back of [u_His] armpit, suffing \the <b>[target]</b>'s whole rod right into it with a [pick(musk)] embrace!"
+				"softly tears a hole in the cloth on the back of [u_His] armpit, stuffing \the <b>[target]</b>'s whole rod right into it with a [pick(musk)] embrace!"
 			)
 		target.set_is_fucking(src, CUM_TARGET_ARMPIT, target.getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -572,7 +590,7 @@
 	if(target.is_fucking(src, CUM_TARGET_BREASTS))
 		lines = list(
 			"slides [u_His] [pick(GLOB.breast_nouns)], up and down through \the <b>[target]</b>'s throbbing [genital_name]",
-			"squeezes [u_His] [pick(GLOB.breast_nouns)] through all of \the <b>[target]</b>'s lenght",
+			"squeezes [u_His] [pick(GLOB.breast_nouns)] through all of \the <b>[target]</b>'s length",
 			"jerks \the <b>[target]</b> off lustfully with [u_His] supple [pick(GLOB.breast_nouns)]"
 		)
 	else
@@ -583,7 +601,7 @@
 		)
 		target.set_is_fucking(src, CUM_TARGET_BREASTS, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -613,7 +631,7 @@
 		)
 		target.set_is_fucking(src, NUTS_TO_FACE, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	target.handle_post_sex(lust_increase, CUM_TARGET_MOUTH, src)
 
@@ -635,7 +653,7 @@
 
 	if(is_fucking(target, CUM_TARGET_URETHRA))
 		lines = list(
-			"humps right into \the <b>[target]</b>'s [t_genital_name], stretiching it as their balls slam together",
+			"humps right into \the <b>[target]</b>'s [t_genital_name], stretching it as their balls slam together",
 			"slides [u_His] [u_genital_name] all the way down \the <b>[target]</b>'s own throbbing [t_genital_name], [t_His] urethra is so tight!",
 			"rams [u_His] [u_genital_name] back and forth through \the <b>[target]</b>'s urethra, giving it a very nice fucking"
 		)
@@ -647,7 +665,7 @@
 		)
 		set_is_fucking(target, CUM_TARGET_URETHRA, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(src, pick(noises), 70, 1, -1)
 	if(can_penetrating_genital_cum())
@@ -669,7 +687,7 @@
 		)
 	else if(target.has_breasts(REQUIRE_EXPOSED))
 		lines = list(
-			"presses [u_His] throbbing tip against \the <b>[target]</b>'s puffy nipple, forcing the whole lenght all the way in with a wet smack",
+			"presses [u_His] throbbing tip against \the <b>[target]</b>'s puffy nipple, forcing the whole length all the way in with a wet smack",
 			"stretches \the <b>[target]</b>'s nipple with his fingers, before forcing it open with the whole girth of [u_His] twitching [genital_name]"
 		)
 	else
@@ -682,7 +700,7 @@
 	if(!is_fucking(target, CUM_TARGET_NIPPLE))
 		set_is_fucking(target, CUM_TARGET_NIPPLE, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]!</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]!")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(src, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -706,13 +724,13 @@
 		)
 	else
 		lines = list(
-			"presses [u_His] tip against \the <b>[target]</b>'s [pick("pudgy ", "soft ", "")] thighs, soon shoving [u_His] whole lenght right in between them",
+			"presses [u_His] tip against \the <b>[target]</b>'s [pick("pudgy ", "soft ", "")] thighs, soon shoving [u_His] whole length right in between them",
 			"presents [u_His] [genital_name] to \the <b>[target]</b>'s legs, ramming its full size right into [t_His] thigh lock",
 			"smooches \the <b>[target]</b>'s crotch with [u_His] throbbing tip, right before piercing between [t_His] thighs with [u_His] full [genital_name]"
 		)
 		set_is_fucking(target, CUM_TARGET_THIGHS, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]!</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]!")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -743,7 +761,7 @@
 		)
 		target.set_is_fucking(src, CUM_TARGET_THIGHS, target.getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(lines)]!</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(lines)]!")
 	visible_message(message, ignored_mobs = get_unconsenting())
 	playlewdinteractionsound(loc, pick('modular_sand/sound/interactions/bang1.ogg',
 						'modular_sand/sound/interactions/bang2.ogg',
@@ -774,12 +792,12 @@
 	)
 	var/list/hell = list(
 		"'s asshole squints as she shoves \the <b>[target]</b>'s face in between [u_His] sweaty [pick(asscheeks)], letting hell go loose!",
-		" pushes [u_His] [pick(ass)] into \the <b>[target]</b>'s face, [pick(list("[t_His] nose shoved deep in [src]'s musky butthole", "[u_His] asshole sqints"))] as [u_He] [pick(braps)][pick(list("", ", [jiggle]"))]",
+		" pushes [u_His] [pick(ass)] into \the <b>[target]</b>'s face, [pick(list("[t_His] nose shoved deep in [src]'s musky butthole", "[u_His] asshole squints"))] as [u_He] [pick(braps)][pick(list("", ", [jiggle]"))]",
 		" smothers \the [target]'s whole head in between [u_His][pick(list(" sweaty", "", " musky"))] [pick(asscheeks)], pushing out gallons of pure braps. [pick(list("", "[jiggle]"))]",
 		"'s [pick(ass)] claps against \the <b>[target]</b>'s nose, right before [u_He] [pick(braps)]"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b>[pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b>[pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	if(!is_fucking(target, GRINDING_FACE_WITH_ANUS))
@@ -813,7 +831,7 @@
 		" [pick(braps)] into \the <b>[target]</b>'s [genital_name]"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b>[pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b>[pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	if(!target.is_fucking(src, CUM_TARGET_ANUS))
@@ -857,7 +875,7 @@
 			"shoves their [genital_name] deep inside of \the <b>[target]</b>'s [pick(ass)], [t_He] [pick(braps)][pick("", ". [jiggle]")]")
 		set_is_fucking(target, CUM_TARGET_ANUS, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, pick('modular_sand/sound/interactions/bang1.ogg',
@@ -892,7 +910,7 @@
 		)
 		set_is_fucking(target, GRINDING_FACE_WITH_ANUS, null)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, 'modular_sand/sound/interactions/champ_fingering.ogg', 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
@@ -915,7 +933,7 @@
 		"smothers \the <b>[target]</b>'s face in between [u_His] musky, dirty asscheeks, [pick(list("", "letting out a [pick(stank)] fart and"))] sliding a monster turd right into [t_His] mouth"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	if(!is_fucking(target, GRINDING_FACE_WITH_ANUS))
@@ -946,7 +964,7 @@
 		"shits uncontrollably all over \the <b>[target]</b>'s [genital_name][prob(50) ? "" : ". [jiggle]"]"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	if(!target.is_fucking(src, CUM_TARGET_ANUS))
@@ -980,11 +998,11 @@
 	else
 		hell = list(
 			"can already smell the stench as [u_He] works [u_His] [genital_name] into \the <b>[target]</b>'s dung hole, being received by warm, wet and nasty feeling all over it.",
-			"grabs the base of [u_His] twitching [genital_name] and presses the tip into \the <b>[target]</b>'s asshole, immediately shoving it right into a fat and moisty log",
+			"grabs the base of [u_His] twitching [genital_name] and presses the tip into \the <b>[target]</b>'s asshole, immediately shoving it right into a fat and moist log",
 			"shoves [genital_name] deep inside of \the <b>[target]</b>'s [pick(ass)], [t_He] releases a massive amount of mush to greet the rod[pick("", ". [jiggle]")]")
 		set_is_fucking(target, CUM_TARGET_ANUS, getorganslot(ORGAN_SLOT_PENIS))
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE), ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, pick(GLOB.brap_noises), 70, 1, -1)
 	playlewdinteractionsound(target.loc, pick('modular_sand/sound/interactions/bang1.ogg',
@@ -1019,7 +1037,7 @@
 		)
 		set_is_fucking(target, GRINDING_FACE_WITH_ANUS, null)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, pick(GLOB.brap_noises), 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
 	playlewdinteractionsound(target.loc, 'modular_sand/sound/interactions/champ_fingering.ogg', 50, 1, -1, ignored_mobs = get_unconsenting(unholy = TRUE))
@@ -1034,7 +1052,7 @@
 		"lets out a moan of relief as yellow rain starts pouring over \the <b>[target]</b>"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	if(get_lust() < 10)
 		add_lust(10)
@@ -1050,7 +1068,7 @@
 		"lets out a moan of relief as yellow rain starts pouring in between \the <b>[target]</b>'s lips"
 	)
 
-	message = "<span class='lewd'>\The <b>[src]</b> [pick(hell)]</span>"
+	message = span_lewd("\The <b>[src]</b> [pick(hell)]")
 	visible_message(message, ignored_mobs = get_unconsenting(unholy = TRUE))
 	if(!is_fucking(target, CUM_TARGET_MOUTH))
 		set_is_fucking(target, CUM_TARGET_MOUTH, pee_pee)

@@ -12,8 +12,17 @@
 	exp_requirements = 100
 	exp_type = EXP_TYPE_CREW
 	considered_combat_role = FALSE
-	alt_titles = list("Slutcurity Trainee", "Security Trainee", "Security Assistant", "Security Cadet", "Security Trainee", "Rookie")
-	custom_spawn_text = "<font color='black' size='2'><b> Your job is to help Security and react to Minor crimes. Conflict De-escalation through WORDS is your top priority. Only use your taser as a last resort.</b></font><font color='red' size='4'><b>You are NOT a Security Officer.</b></font>"
+	alt_titles = list(
+		"Slutcurity Trainee",
+		"Security Trainee",
+		"Security Assistant",
+		"Security Cadet",
+		"Security Trainee",
+		"Rookie",
+		"Hired Muscle",
+		"Bodyguard"
+		)
+	custom_spawn_text = "<font color='black' size='2'><b> Your job is to help Security and react to minor crimes. Conflict de-escalation through WORDS is your top priority. Only use your taser as a last resort.</b></font><font color='red' size='4'><b>You are NOT a Security Officer.</b></font>"
 
 	outfit = /datum/outfit/job/peacekeeper
 	plasma_outfit = /datum/outfit/plasmaman/peacekeeper
@@ -33,7 +42,7 @@
 	name = "Peacekeeper"
 	jobtype = /datum/job/peacekeeper
 
-	belt = /obj/item/gun/energy/e_gun/advtaser
+	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	uniform = /obj/item/clothing/under/rank/security/officer/peacekeeper
@@ -41,9 +50,10 @@
 	head = /obj/item/clothing/head/helmet/blueshirt
 	suit = /obj/item/clothing/suit/armor/vest/peacekeeper
 	shoes = /obj/item/clothing/shoes/jackboots
-	r_pocket = /obj/item/storage/bag/security
-	l_pocket = /obj/item/pda/security
-	backpack_contents = list(/obj/item/storage/box/zipties, /obj/item/reagent_containers/spray/pepper, /obj/item/clothing/accessory/badge/deputy, /obj/item/assembly/flash/handheld, /obj/item/holosign_creator/security)
+	l_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/assembly/flash/handheld
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/reagent_containers/spray/pepper, /obj/item/clothing/accessory/badge/deputy, /obj/item/holosign_creator/security)
 
 	backpack = /obj/item/storage/backpack/security/pk
 	satchel = /obj/item/storage/backpack/satchel/sec/pk
@@ -52,7 +62,7 @@
 
 	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/plasmaman/peacekeeper
+/datum/outfit/plasmaman/peacekeeper // i dare not to touch whatever this is why does it have a fucking telescopic baton
 	name = "Peacekeeper Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security
@@ -61,7 +71,7 @@
 	r_hand = /obj/item/melee/classic_baton/telescopic
 	r_pocket = /obj/item/storage/bag/security
 	l_pocket = /obj/item/assembly/flash/handheld
-	backpack_contents = list(/obj/item/storage/box/zipties, /obj/item/reagent_containers/peacehypo, /obj/item/reagent_containers/spray/pepper, /obj/item/clothing/accessory/badge/deputy)
+	backpack_contents = list(/obj/item/reagent_containers/spray/pepper, /obj/item/clothing/accessory/badge/deputy)
 
 	box = /obj/item/storage/box/survival/security
 
@@ -141,7 +151,7 @@ Peacekeeper Hypospray
 /obj/item/reagent_containers/peacehypo/attack(mob/living/carbon/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
 	if(!R.total_volume)
-		to_chat(user, "<span class='notice'>The injector is empty.</span>")
+		to_chat(user, span_notice("The injector is empty."))
 		return
 	if(!istype(M))
 		return
@@ -150,15 +160,15 @@ Peacekeeper Hypospray
 			for(var/datum/reagent/RG in R.reagent_list)
 				if(M.reagents.has_reagent(RG.type) && !RG.overdose_threshold == 0)
 					if(((M.reagents.get_reagent_amount(RG.type)) + amount_per_transfer_from_this > RG.overdose_threshold))
-						to_chat(user, "<span class='warning'>Injecting [M] with more [RG] would overdose them.</span>")
+						to_chat(user, span_warning("Injecting [M] with more [RG] would overdose them."))
 						return
-		to_chat(M, "<span class='warning'>You feel a tiny prick!</span>")
-		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
+		to_chat(M, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [M] with the injector."))
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
 		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>")
+			to_chat(user, span_notice("[trans] unit\s injected.  [R.total_volume] unit\s remaining."))
 
 	var/list/injected = list()
 	for(var/datum/reagent/RG in R.reagent_list)
@@ -172,7 +182,7 @@ Peacekeeper Hypospray
 	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
-	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
+	to_chat(user, span_notice("[src] is now dispensing '[R.name]'."))
 	return
 
 /obj/item/reagent_containers/peacehypo/examine(mob/user)
@@ -185,11 +195,11 @@ Peacekeeper Hypospray
 	for(var/datum/reagents/RS in reagent_list)
 		var/datum/reagent/R = locate() in RS.reagent_list
 		if(R)
-			. += "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>"
+			. += span_notice("It currently has [R.volume] unit\s of [R.name] stored.")
 			empty = 0
 
 	if(empty)
-		. += "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>"
+		. += span_warning("It is currently empty! Allow some time for the internal syntheszier to produce more.")
 
 /* End Peacekeeper Hypo
 */

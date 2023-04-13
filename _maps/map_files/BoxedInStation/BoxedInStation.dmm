@@ -1387,7 +1387,7 @@
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/cmo)
 "aHJ" = (
-/obj/machinery/computer/bounty{
+/obj/machinery/piratepad/civilian{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
@@ -6476,11 +6476,11 @@
 /turf/open/floor/plasteel,
 /area/security/office)
 "dwJ" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -8162,10 +8162,10 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/command/storage/eva)
 "ena" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/effect/landmark/start/station_engineer,
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
-/obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engineering/break_room)
 "enj" = (
@@ -10105,14 +10105,14 @@
 /turf/open/floor/plasteel,
 /area/engineering/main)
 "flX" = (
-/obj/structure/chair/sofa/corp/right{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
+	},
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/qm)
@@ -10914,7 +10914,7 @@
 /area/service/kitchen)
 "fGo" = (
 /obj/machinery/vending/dinnerware{
-	contraband = list(/obj/item/kitchen/rollingpin = 2, /obj/item/kitchen/knife/butcher = 2, /obj/item/reagent_containers/food/condiment/flour = 4)
+	contraband = list(/obj/item/kitchen/rollingpin=2,/obj/item/kitchen/knife/butcher=2,/obj/item/reagent_containers/food/condiment/flour=4)
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/service/kitchen";
@@ -12227,7 +12227,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "gqi" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -13326,11 +13326,11 @@
 /area/service/bar)
 "gUI" = (
 /obj/machinery/vending/dinnerware{
-	contraband = list(/obj/item/reagent_containers/food/condiment/flour = 4);
+	contraband = list(/obj/item/reagent_containers/food/condiment/flour=4);
 	desc = "This vendor is full of condiments to put on food.";
 	name = "\improper Condiments Vendor";
 	product_ads = "Get your sauces here!;No slave labour was used to make these products!;Nanotrasen Approved?!";
-	products = list(/obj/item/storage/bag/tray = 8, /obj/item/reagent_containers/food/drinks/drinkingglass = 10, /obj/item/storage/box/cups = 5, /obj/item/reagent_containers/food/condiment/pack/ketchup = 20, /obj/item/reagent_containers/food/condiment/pack/mustard = 20, /obj/item/reagent_containers/food/condiment/pack/hotsauce = 20, /obj/item/reagent_containers/food/condiment/pack/astrotame = 20, /obj/item/reagent_containers/food/condiment/saltshaker = 20, /obj/item/reagent_containers/food/condiment/peppermill = 20)
+	products = list(/obj/item/storage/bag/tray=8,/obj/item/reagent_containers/food/drinks/drinkingglass=10,/obj/item/storage/box/cups=5,/obj/item/reagent_containers/food/condiment/pack/ketchup=20,/obj/item/reagent_containers/food/condiment/pack/mustard=20,/obj/item/reagent_containers/food/condiment/pack/hotsauce=20,/obj/item/reagent_containers/food/condiment/pack/astrotame=20,/obj/item/reagent_containers/food/condiment/saltshaker=20,/obj/item/reagent_containers/food/condiment/peppermill=20)
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/service/kitchen)
@@ -18372,11 +18372,11 @@
 /turf/open/floor/carpet,
 /area/service/chapel/main)
 "jxP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output{
-	dir = 1
-	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -18857,6 +18857,10 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
+"jMk" = (
+/obj/effect/landmark/start/stowaway,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "jMy" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -22205,7 +22209,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "lJq" = (
-/obj/machinery/computer/bounty{
+/obj/machinery/piratepad/civilian{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -26742,14 +26746,14 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "oeK" = (
-/obj/structure/chair/sofa/corp/right{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
+	},
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/hop)
@@ -30557,14 +30561,14 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "pTr" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/cmo)
@@ -31800,6 +31804,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/main)
+"qyg" = (
+/obj/effect/landmark/start/stowaway,
+/turf/open/floor/plating,
+/area/maintenance/central/secondary)
 "qyp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -33615,11 +33623,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "rtO" = (
-/obj/structure/chair/sofa/corp/right{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
@@ -37114,14 +37122,14 @@
 	},
 /area/maintenance/bar)
 "tjZ" = (
-/obj/structure/chair/sofa/corp/right{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/structure/chair/sofa/corp/left{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/cmo)
@@ -37843,14 +37851,14 @@
 /turf/open/floor/plasteel,
 /area/cargo/miningdock)
 "tBW" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/heads_quarters/hop)
@@ -39060,8 +39068,7 @@
 /area/hallway/secondary/exit)
 "uhI" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 5;
-	icon_state = "pipe11-2"
+	dir = 5
 	},
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
@@ -41019,7 +41026,7 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "vdH" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -45606,14 +45613,14 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "xtv" = (
-/obj/structure/chair/sofa/corp/left{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/cargo/qm)
@@ -45770,7 +45777,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/command/heads_quarters/ce)
 "xxa" = (
-/obj/machinery/computer/bounty{
+/obj/machinery/piratepad/civilian{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -46275,6 +46282,13 @@
 	dir = 4
 	},
 /area/service/theater)
+"xIk" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/start/stowaway,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "xIu" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/firedoor,
@@ -66643,7 +66657,7 @@ kED
 kED
 gXk
 dQv
-lRs
+jMk
 gXk
 kED
 cwy
@@ -68913,7 +68927,7 @@ oCD
 mhf
 nzv
 lRs
-dQv
+xIk
 lRs
 seE
 qaQ
@@ -70456,7 +70470,7 @@ vBu
 vBu
 cTZ
 aye
-mjY
+qyg
 mjY
 jzy
 mjY
@@ -73256,7 +73270,7 @@ nOA
 pAn
 mjY
 kZA
-mjY
+qyg
 mjY
 rTW
 aye

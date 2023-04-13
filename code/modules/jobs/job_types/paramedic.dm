@@ -16,12 +16,17 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_RESEARCH,)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
+	bounty_types = CIV_JOB_MED
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 
 	threat = 0.5
 
 	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
+	
+	family_heirlooms = list(
+		/obj/item/storage/firstaid/ancient/heirloom
+	)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"

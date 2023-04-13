@@ -94,6 +94,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/butt, GLOB.butt_shapes_list)
 	if(!GLOB.belly_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/belly, GLOB.belly_shapes_list)
+	if(!GLOB.anus_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/anus, GLOB.anus_shapes_list)
 	if(!GLOB.ipc_screens_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/screen, GLOB.ipc_screens_list)
 	if(!GLOB.ipc_antennas_list.len)
@@ -213,13 +215,17 @@
 		"has_butt"			= FALSE,
 		"butt_size"			= BUTT_SIZE_DEF,
 		"butt_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		//Hyper's belly stuffs
+		//Hyper's belly stuff
 		"has_belly" 		= FALSE,
 		"belly_size"		= 1,
 		"belly_color" 		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		//Hyper's belly stuff
 
-
+		//SPLURT's anus stuff
+		"has_anus"			= FALSE,
+		"anus_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"anus_shape"		= DEF_ANUS_SHAPE,
+		//SPLURT's anus stuff
 
 		"balls_visibility"	= GEN_VISIBLE_NO_UNDIES,
 		"breasts_visibility"= GEN_VISIBLE_NO_UNDIES,
@@ -227,14 +233,16 @@
 		"vag_visibility"	= GEN_VISIBLE_NO_UNDIES,
 		"butt_visibility"	= GEN_VISIBLE_NO_UNDIES,
 		"belly_visibility"	= GEN_VISIBLE_NO_UNDIES,
+		"anus_visibility" 	= GEN_VISIBLE_NO_UNDIES,
 		"cock_stuffing" = FALSE,
 		"balls_stuffing" = FALSE,
 		"vag_stuffing" = FALSE,
 		"breasts_stuffing" = FALSE,
 		"butt_stuffing" = FALSE,
 		"belly_stuffing" = FALSE,
+		"anus_stuffing" = FALSE,
 		"inert_eggs" = FALSE,
-		//Hyper's custom fluids
+		//SPLURT's custom fluids
 		"balls_fluid"		= /datum/reagent/consumable/semen,
 		"womb_fluid"		= /datum/reagent/consumable/semen/femcum,
 		"breasts_fluid"		= /datum/reagent/consumable/milk,
@@ -404,17 +412,27 @@ GLOBAL_LIST_EMPTY(species_datums)
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
-/proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	message = "<span class='linkify'>[message]</span>"
-	for(var/mob/M in GLOB.player_list)
-		var/datum/preferences/prefs
-		if(M.client && M.client.prefs)
-			prefs = M.client.prefs
-		else
-			prefs = new
+// Displays a message in deadchat, sent by source. source is not linkified, message is, to avoid stuff like character names to be linkified.
+// Automatically gives the class deadsay to the whole message (message + source)
+/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
+	message = span_deadsay("[source][span_linkify(message)]")
 
+	for(var/mob/M in GLOB.player_list)
+		var/chat_toggles = TOGGLES_DEFAULT_CHAT
+		var/toggles = TOGGLES_DEFAULT
+		var/list/ignoring
+		if(M.client?.prefs)
+			var/datum/preferences/prefs = M.client?.prefs
+			chat_toggles = prefs.chat_toggles
+			toggles = prefs.toggles
+			ignoring = prefs.ignoring
+		if(admin_only)
+			if (!M.client?.holder)
+				return
+			else
+				message += span_deadsay(" (This is viewable to admins only).")
 		var/override = FALSE
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
 			override = TRUE
@@ -425,15 +443,15 @@ GLOBAL_LIST_EMPTY(species_datums)
 			continue
 		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && (speaker_key in prefs.ignoring))
+		if(speaker_key && (speaker_key in ignoring))
 			continue
 
 		switch(message_type)
 			if(DEADCHAT_DEATHRATTLE)
-				if(prefs.toggles & DISABLE_DEATHRATTLE)
+				if(toggles & DISABLE_DEATHRATTLE)
 					continue
 			if(DEADCHAT_ARRIVALRATTLE)
-				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
+				if(toggles & DISABLE_ARRIVALRATTLE)
 					continue
 
 		if(isobserver(M))
@@ -450,9 +468,9 @@ GLOBAL_LIST_EMPTY(species_datums)
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 
-			to_chat(M, rendered_message)
+			to_chat(M, rendered_message, avoid_highlighting = speaker_key == M.key)
 		else
-			to_chat(M, message)
+			to_chat(M, message, avoid_highlighting = speaker_key == M.key)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)

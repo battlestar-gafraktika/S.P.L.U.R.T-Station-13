@@ -18,6 +18,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/implant_hide_backpack
+	name = "Storage Concealment Implant Case"
+	desc = "A glass case containing an implant"
+	id = "implant_hide_backpack"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/glass = 500)
+	build_path = /obj/item/implantcase/hide_backpack
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/board/implantradio
 	name = "Radio Implant Case"
 	desc = "A glass case containing an implant"
@@ -64,6 +74,13 @@
 /datum/design/cyberimp_thermals
 	category = list("Cybernetics", "Medical Designs")
 
+// Derivative of glow eyes
+/datum/design/cyberimp_gloweyes/cyberimp_hypnoeyes
+	name = "Mesmer Eyes"
+	desc = "Cybernetic eyes with integrated memetic sub-systems."
+	id = "ci-hypnoeyes"
+	build_path = /obj/item/organ/eyes/robotic/hypno
+
 //Cybernetic implants
 
 /datum/design/cyberimp_breather
@@ -89,6 +106,17 @@
 
 /datum/design/cyberimp_security_hud
 	category = list("Implants", "Medical Designs")
+
+/datum/design/cyberimp_diagnostic_hud
+	name = "Diagnostic HUD Implant"
+	desc = "These cybernetic eyes will display a diagnostic HUD over everything you see. Wiggle eyes to control."
+	id = "ci-diaghud"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 50
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/silver = 500, /datum/material/gold = 500)
+	build_path = /obj/item/organ/cyberimp/eyes/hud/diagnostic
+	category = list("Implants", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cyberimp_antidrop
 	category = list("Implants", "Medical Designs")

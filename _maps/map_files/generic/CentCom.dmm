@@ -91,13 +91,13 @@
 	},
 /area/holodeck/rec_center/lounge)
 "ap" = (
-/turf/open/floor/holofloor/plating,
+/turf/open/floor/holofloor/basalt,
 /area/holodeck/rec_center/wildlife)
 "aq" = (
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/offline)
 "ar" = (
-/turf/open/floor/holofloor/plating/burnmix,
+/turf/open/indestructible/binary,
 /area/holodeck/rec_center/burn)
 "as" = (
 /obj/effect/turf_decal/tile/red{
@@ -178,12 +178,12 @@
 	},
 /area/holodeck/rec_center/lounge)
 "aB" = (
-/obj/effect/holodeck_effect/mobspawner,
-/turf/open/floor/holofloor/plating,
+/obj/effect/holodeck_effect/mobspawner/funclaw,
+/turf/open/floor/holofloor/basalt,
 /area/holodeck/rec_center/wildlife)
 "aC" = (
 /obj/effect/holodeck_effect/sparks,
-/turf/open/floor/holofloor/plating/burnmix,
+/turf/open/indestructible/binary,
 /area/holodeck/rec_center/burn)
 "aD" = (
 /obj/effect/turf_decal/tile/red{
@@ -413,7 +413,7 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "bk" = (
-/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/effect/holodeck_effect/mobspawner/bumbles,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/anthophila)
 "bl" = (
@@ -752,7 +752,7 @@
 	},
 /area/holodeck/rec_center/medical)
 "ce" = (
-/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/effect/holodeck_effect/mobspawner/bumbles,
 /obj/item/clothing/head/beekeeper_head,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/anthophila)
@@ -856,13 +856,13 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/dodgeball)
 "cq" = (
-/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/effect/holodeck_effect/mobspawner/bumbles,
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/beekeeper_suit,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/anthophila)
 "cr" = (
-/obj/effect/holodeck_effect/mobspawner/bee,
+/obj/effect/holodeck_effect/mobspawner/bumbles,
 /obj/item/melee/flyswatter,
 /turf/open/floor/holofloor/asteroid,
 /area/holodeck/rec_center/anthophila)
@@ -8968,7 +8968,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/computer/operating,
 /turf/open/floor/plasteel/dark,
 /area/slavers)
 "uj" = (
@@ -19090,11 +19089,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/table,
 /obj/item/cautery,
 /obj/item/circular_saw,
 /obj/item/scalpel,
 /obj/item/surgicaldrill,
+/obj/item/retractor/advanced,
+/obj/structure/table,
 /turf/open/floor/plasteel/dark,
 /area/slavers)
 "RO" = (
@@ -20270,6 +20270,9 @@
 	},
 /turf/open/space,
 /area/space)
+"Vy" = (
+/turf/open/chasm/lavaland,
+/area/holodeck/rec_center/wildlife)
 "Vz" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
@@ -21084,12 +21087,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/retractor,
-/obj/item/hemostat,
 /obj/machinery/defibrillator_mount/loaded{
 	pixel_y = 28
 	},
+/obj/machinery/computer/operating,
 /turf/open/floor/plasteel/dark,
 /area/slavers)
 "YD" = (
@@ -80913,16 +80914,16 @@ aa
 "}
 (232,1,1) = {"
 ac
+Vy
+Vy
+Vy
 ap
 ap
 ap
 ap
-ap
-ap
-ap
-ap
-ap
-ap
+Vy
+Vy
+Vy
 bj
 bt
 bI
@@ -81170,7 +81171,7 @@ aa
 "}
 (233,1,1) = {"
 ac
-ap
+Vy
 aB
 ap
 ap
@@ -81179,7 +81180,7 @@ ap
 ap
 ap
 aB
-ap
+Vy
 bj
 Xg
 TF
@@ -81427,7 +81428,7 @@ aa
 "}
 (234,1,1) = {"
 ac
-ap
+Vy
 ap
 ap
 ap
@@ -81436,7 +81437,7 @@ aB
 ap
 ap
 ap
-ap
+Vy
 bj
 bu
 bJ
@@ -81684,16 +81685,16 @@ aa
 "}
 (235,1,1) = {"
 ac
-ap
-aB
-ap
+Vy
 ap
 ap
 ap
 ap
 ap
-aB
 ap
+ap
+ap
+Vy
 bj
 bv
 bK
@@ -81941,16 +81942,16 @@ aa
 "}
 (236,1,1) = {"
 ac
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
+Vy
 bj
 RD
 Va

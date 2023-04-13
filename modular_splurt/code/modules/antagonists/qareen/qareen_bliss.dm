@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	cure_text = "Holy water or Semen."
 	spread_text = "A fog of pink unholy energy"
-	cures = list("holywater", "semen")
+	cures = list(/datum/reagent/water/holywater, /datum/reagent/consumable/semen)
 	cure_chance = 5
 	agent = "Unholy Forces"
 	viable_mobtypes = list(/mob/living/carbon/human)
@@ -27,7 +27,7 @@
 /datum/disease/qarbliss/stage_act()
 	if(prob(stage*2))
 		if(prob(5))
-			to_chat(affected_mob, "<span class='revennotice'>You feel [pick("hot and bothered", "horny", "lusty", "like you're in a rut", "the need to breed", "breedable", "slimy")]...</span>")
+			to_chat(affected_mob, span_revennotice("You feel [pick("hot and bothered", "horny", "lusty", "like you're in a rut", "the need to breed", "breedable", "slimy")]..."))
 		if(stage > 1 && prob(20))
 			affected_mob.confused += 5
 		if(stage > 2 && prob(20))
@@ -56,14 +56,14 @@
 		if(5)
 			if (bliss_stage_2 == FALSE)
 				bliss_stage_2 = TRUE
-				to_chat(affected_mob, "<span class='revenbignotice'>It's too much! Brain.. fried..</span>")
+				to_chat(affected_mob, span_revenbignotice("It's too much! Brain.. fried.."))
 				if (ishuman(affected_mob))
 					var/mob/living/carbon/human/H = affected_mob
 					H.mob_climax(TRUE,"Bliss",src,TRUE)
 				if(affected_mob.dna?.species)
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#fff0ff")
 					affected_mob.dna.species.handle_hair(affected_mob,"#da6eda")
-				affected_mob.visible_message("<span class='warning'>[affected_mob] looks utterly depraved.</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>tingling</i>...</span>")
+				affected_mob.visible_message(span_warning("[affected_mob] looks utterly depraved."), span_revennotice("You suddenly feel like your skin is <i>tingling</i>..."))
 				affected_mob.add_atom_colour("#ffdaf3", TEMPORARY_COLOUR_PRIORITY)
 				new /obj/effect/temp_visual/revenant(affected_mob.loc)
 				// addtimer(CALLBACK(src, .proc/blessings), 150)
@@ -79,4 +79,4 @@
 	if(QDELETED(affected_mob))
 		return
 	affected_mob.playsound_local(affected_mob, 'sound/effects/gib_step.ogg', 40, 1, -1)
-	to_chat(affected_mob, "<span class='revendanger'>You sense the curse of a lustful ghost befall you...</span>")
+	to_chat(affected_mob, span_revendanger("You sense the curse of a lustful ghost befall you..."))

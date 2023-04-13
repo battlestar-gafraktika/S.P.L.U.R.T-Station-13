@@ -1,4 +1,3 @@
-//Hyper stuff
 /datum/gear/uniform/tunic
 	name = "Tunic"
 	description = "A simple tunic."
@@ -29,10 +28,27 @@
 	name = "Pink workout short"
 	path = /obj/item/clothing/under/shorts/pinkwshort
 
+/datum/gear/uniform/domina
+	name = "Dominatrix Dress"
+	path = /obj/item/clothing/under/domina
+
+/datum/gear/uniform/bluedress
+	name = "Blue Royal Dress"
+	path = /obj/item/clothing/under/bluedress
+
+/datum/gear/uniform/performer
+	name = "Performers one piece"
+	path = /obj/item/clothing/under/performer
+
 // Suggestion #151
 /datum/gear/uniform/waiter
 	name = "waiter's outfit"
 	path = /obj/item/clothing/under/suit/waiter
+
+// Suggestion #3278
+/datum/gear/uniform/amish
+	name = "Amish suit"
+	path = /obj/item/clothing/under/suit/sl
 
 /datum/gear/uniform/bunnysuit
 	name = "bunny outfit"
@@ -130,3 +146,95 @@
 	path = /obj/item/clothing/under/goner/fake/poly
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#E6E6E6")
+
+/datum/gear/uniform/leia_outfit
+	name = "Princess Leia Outfit"
+	path = /obj/item/clothing/under/misc/leia_outfit
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#C61818", "#D4AF37")
+
+/datum/gear/uniform/performer/polychromic
+	name = "Polychromic performers one piece"
+	path = /obj/item/clothing/under/performer/polychromic
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#ffffff")
+
+/datum/gear/uniform/stripper/security
+	name = "Security Stripper Outfit"
+	path = /obj/item/clothing/under/rank/security/stripper
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Security Officer", "Warden", "Head Of Security")
+
+/datum/gear/uniform/stripper/explorer
+	name = "Explorer Stripper Outfit"
+	path = /obj/item/clothing/under/rank/cargo/miner/lavaland/stripper
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Shaft Miner")
+
+/datum/gear/uniform/suit/tuxedo
+	name = "Tuxedo suit"
+	path = /obj/item/clothing/under/suit/tuxedo
+
+/datum/gear/uniform/suit/tuxedo/carp
+	name = "Carpskin suit"
+	path = /obj/item/clothing/under/suit/carpskin
+
+/datum/gear/uniform/suit/pencil
+	name = "Black Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil
+
+/datum/gear/uniform/suit/pencil/black_really
+	name = "Executive Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/black_really
+
+/datum/gear/uniform/suit/pencil/charcoal
+	name = "Charcoal Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/charcoal
+
+/datum/gear/uniform/suit/pencil/navy
+	name = "Navy Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/navy
+
+/datum/gear/uniform/suit/pencil/burgandy
+	name = "Burgandy Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/burgandy
+
+/datum/gear/uniform/suit/pencil/checkered
+	name = "Checkered Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/checkered
+
+/datum/gear/uniform/suit/pencil/tan
+	name = "Tan Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/tan
+
+/datum/gear/uniform/suit/pencil/green
+	name = "Green Pencilskirt"
+	path = /obj/item/clothing/under/suit/pencil/green
+
+/datum/gear/uniform/suit/executive_suit_alt
+	name = "Wide-collared Executive Suit"
+	path = /obj/item/clothing/under/suit/black_really_collared
+
+/datum/gear/uniform/suit/executive_skirt_alt
+	name = "Wide-collared Executive Suitskirt"
+	path = /obj/item/clothing/under/suit/black_really_collared/skirt
+
+/datum/gear/uniform/suit/inferno
+	name = "Inferno Suit"
+	path = /obj/item/clothing/under/suit/inferno
+
+/datum/gear/uniform/suit/inferno_skirt
+	name = "Inferno Skirt"
+	path = /obj/item/clothing/under/suit/inferno/skirt
+
+/datum/gear/uniform/suit/designer_inferno
+	name = "Designer Inferno Suit"
+	path = /obj/item/clothing/under/suit/inferno/beeze
+
+/datum/gear/uniform/suit/helltaker
+	name = "Red Shirt with White Trousers"
+	path = /obj/item/clothing/under/suit/helltaker
+
+/datum/gear/uniform/suit/helltaker/skirt
+	name = "Red Shirt with White Skirt"
+	path = /obj/item/clothing/under/suit/helltaker/skirt

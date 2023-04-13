@@ -1,6 +1,11 @@
 /mob/living/carbon/human/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage, mb_time, obj/item/organ/genital/Lgen, forced = FALSE)
 	. = ..()
 	L.receive_climax(src, Lgen, G, spillage, forced = forced)
+	if(iswendigo(L))
+		var/mob/living/carbon/wendigo/W = L
+		if(W.pulling == src)
+			W.slaves |= src
+			to_chat(src, "<font color='red'> You are now [W]'s slave! Serve your master properly! </font>")
 
 /mob/living/proc/receive_climax(mob/living/partner, obj/item/organ/genital/receiver, obj/item/organ/genital/source, spill, forced)
 	//gregnancy...
@@ -60,7 +65,7 @@
 		var/obj/item/organ/genital/penis/bepis = sender
 		if(locate(/obj/item/genital_equipment/sounding) in bepis.contents)
 			spill = TRUE
-			to_chat(src, "<span class='userlove'>You feel your sounding rod being pushed out of your cockhole with the burst of jizz!</span>")
+			to_chat(src, span_userlove("You feel your sounding rod being pushed out of your cockhole with the burst of jizz!"))
 			var/obj/item/genital_equipment/sounding/rod = locate(/obj/item/genital_equipment/sounding) in bepis.contents
 			rod.forceMove(get_turf(src))
 
@@ -81,14 +86,14 @@
 		return
 	var/main_fluid = lowertext(fluid_source.get_master_reagent_name())
 	if(mb_time)
-		visible_message("<span class='love'>You hear a strong suction sound coming from the [M.name] on [src]'s [G.name].</span>", \
-							"<span class='userlove'>The [M.name] pumps faster, trying to get you over the edge.</span>", \
-							"<span class='userlove'>Something vacuums your [G.name] with a quiet but powerfull vrrrr.</span>")
+		visible_message(span_love("You hear a strong suction sound coming from the [M.name] on [src]'s [G.name]."), \
+							span_userlove("The [M.name] pumps faster, trying to get you over the edge."), \
+							span_userlove("Something vacuums your [G.name] with a quiet but powerfull vrrrr."))
 		if(!do_after(src, mb_time, target = src) || !in_range(src, container) || !G.climaxable(src, TRUE))
 			return
-	visible_message("<span class='love'>[src] twitches as [p_their()] [main_fluid] trickles into [container].</span>", \
-								"<span class='userlove'>[M] sucks out all the [main_fluid] you had been saving up into [container].</span>", \
-								"<span class='userlove'>You feel a vacuum sucking on your [G.name] as you climax!</span>")
+	visible_message(span_love("[src] twitches as [p_their()] [main_fluid] trickles into [container]."), \
+								span_userlove("[M] sucks out all the [main_fluid] you had been saving up into [container]."), \
+								span_userlove("You feel a vacuum sucking on your [G.name] as you climax!"))
 	do_climax(fluid_source, container, G, FALSE, cover = TRUE)
 	emote("moan")
 
@@ -97,13 +102,17 @@
 	if(!fluid_source)
 		return
 	if(mb_time) //Skip warning if this is an instant climax.
-		to_chat(src,"<span class='userlove'>You're about to climax over [L]!</span>")
-		to_chat(L,"<span class='userlove'>[src] is about to climax over you!</span>")
+		to_chat(src,span_userlove("You're about to climax over [L]!"))
+		to_chat(L,span_userlove("[src] is about to climax over you!"))
 		if(!do_after(src, mb_time, target = src) || !in_range(src, L) || !G.climaxable(src, TRUE))
 			return
-	to_chat(src,"<span class='userlove'>You climax all over [L] using your [G.name]!</span>")
-	to_chat(L, "<span class='userlove'>[src] climaxes all over you using [p_their()] [G.name]!</span>")
+	to_chat(src,span_userlove("You climax all over [L] using your [G.name]!"))
+	to_chat(L, span_userlove("[src] climaxes all over you using [p_their()] [G.name]!"))
 	do_climax(fluid_source, L, G, spillage, cover = TRUE)
+
+/mob/living/carbon/human/proc/getPercentAroused()
+    var/percentage = ((get_lust() / (get_lust_tolerance() * 3)) * 100)
+    return percentage
 
 /atom/proc/add_cum_overlay() //This can go in a better spot, for now its here.
 	cum_splatter_icon = icon(initial(icon), initial(icon_state), dir = 1)
@@ -117,3 +126,38 @@
 	if(cum_splatter_icon)
 		cut_overlay(cum_splatter_icon)
 	return TRUE
+
+//arousal hud display
+
+/atom/movable/screen/arousal
+	name = "arousal"
+	icon_state = "arousal0"
+	icon = 'icons/obj/genitals/hud.dmi'
+	screen_loc = ui_arousal
+
+/atom/movable/screen/arousal/Initialize(mapload, mob/living/carbon/human/owner)
+	. = ..()
+	if(!istype(owner))
+		return INITIALIZE_HINT_QDEL
+	RegisterSignal(owner, COMSIG_MOB_LUST_UPDATED, .proc/update_lust)
+
+/atom/movable/screen/arousal/Click()
+	if(!ishuman(usr))
+		return FALSE
+	if(!usr.client?.prefs.arousable)
+		return
+	var/mob/living/M = usr
+	M.interact_with()
+
+/atom/movable/screen/arousal/proc/update_lust(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	if(!istype(source))
+		return
+	if(!source.client || !source.hud_used)
+		return
+
+	var/arousal_level = 0
+	if(source.stat != DEAD)
+		arousal_level = min(FLOOR(source.getPercentAroused(), 10),100)
+	icon_state = "arousal[arousal_level]"

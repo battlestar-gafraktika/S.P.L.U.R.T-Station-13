@@ -60,6 +60,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/butt, GLOB.butt_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/belly, GLOB.belly_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/testicles, GLOB.balls_shapes_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/anus, GLOB.anus_shapes_list)
 
 	for(var/gpath in subtypesof(/obj/item/organ/genital))
 		var/obj/item/organ/genital/G = gpath
@@ -122,6 +123,6 @@
 	for(var/path in typesof(/obj/item/coin))
 		var/obj/item/coin/C = new path
 		UNTIL(C.flags_1 & INITIALIZED_1) //we want to make sure the value is calculated and not null.
-		GLOB.coin_values[path] = C.value
+		GLOB.coin_values[path] = C.get_item_credit_value()
 		qdel(C)
 

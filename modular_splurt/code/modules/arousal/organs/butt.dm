@@ -1,3 +1,23 @@
+/obj/item/organ/genital/butt
+	linked_organ_slot = ORGAN_SLOT_ANUS
+
+/obj/item/organ/genital/butt/update_size()
+	if(!linked_organ)
+		return ..()
+
+	linked_organ.size = size
+	linked_organ.update()
+	if(size < 0)
+		QDEL_IN(linked_organ, 1)
+	. = ..()
+
+/obj/item/organ/genital/butt/toggle_visibility(visibility, update)
+	. = ..()
+	var/obj/item/organ/genital/anus/butthole = linked_organ
+	if(!butthole?.is_exposed() || is_exposed())
+		return .
+	linked_organ.toggle_visibility(visibility)
+
 /obj/item/organ/genital/butt/get_features(mob/living/carbon/human/H)
 	. = ..()
 	original_fluid_id = fluid_id
@@ -25,6 +45,6 @@
 		var/list/asscheeks = list("asscheeks", "buttcheeks", "ass buns", "booty pillows", "dumptruck spheres", "[pick(list("jiggly", "bouncy", "wobbly"))] buttocks")
 		modify_size(growth_amount)
 		if(size != previous)
-			owner.visible_message("<span class='lewd'>\The <b>[owner]</b>'s [pick(GLOB.butt_nouns + asscheeks)] bounce\s outwards lewdly as [owner.p_they()] get[owner.p_s()] pumped full of [lowertext(source_gen.get_fluid_name())] from behind!</span>", ignored_mobs = owner.get_unconsenting())
+			owner.visible_message(span_lewd("\The <b>[owner]</b>'s [pick(GLOB.butt_nouns + asscheeks)] bounce\s outwards lewdly as [owner.p_they()] get[owner.p_s()] pumped full of [lowertext(source_gen.get_fluid_name())] from behind!"), ignored_mobs = owner.get_unconsenting())
 			fluid_id = source_gen.get_fluid_id()
 		climax_fluids.clear_reagents()

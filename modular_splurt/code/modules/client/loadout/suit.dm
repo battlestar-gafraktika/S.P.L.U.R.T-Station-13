@@ -14,6 +14,15 @@
 	name = "dracula coat"
 	path = /obj/item/clothing/suit/dracula
 
+// Suggestion #3279
+/datum/gear/suit/apron
+	name = "apron, blue"
+	path = /obj/item/clothing/suit/apron
+
+/datum/gear/suit/overalls
+	name = "overalls"
+	path = /obj/item/clothing/suit/apron/overalls
+
 // Fixes "Fed (Modern) uniform, White" being in general suit loadout section.
 /datum/gear/suit/trekcmdcapmod
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JOBS
@@ -65,6 +74,14 @@
 	path = /obj/item/clothing/suit/toggle/rp_jacket/white
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
+/datum/gear/suit/baroness
+	name = "Baroness Dress"
+	path = /obj/item/clothing/suit/baroness
+
+/datum/gear/suit/ladyballat
+	name = "Green Ball Dress"
+	path = /obj/item/clothing/suit/baroness/ladyballat
+
 // Polychrome GWTB
 /datum/gear/suit/gonersuit
 	name = "polychromic trencher coat"
@@ -79,10 +96,5 @@
 
 /datum/gear/suit/tunnelfox
 	name = "tunnel fox jacket"
-	path = /obj/item/clothing/suit/tunnelfox
-	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
-
-/datum/gear/suit/tunnelfox_t
-	name = "opened tunnel fox jacket"
-	path = /obj/item/clothing/suit/tunnelfox_t
+	path = /obj/item/clothing/suit/toggle/tunnelfox
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS

@@ -54,7 +54,7 @@
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
-		return ShiftMiddleClickOn(A)
+		return ShiftMiddleClickOn(A, params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		return CtrlShiftClickOn(A)
 	if(modifiers["middle"])
@@ -397,15 +397,17 @@
 	Unused except for AI
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
+	. = SEND_SIGNAL(src, COMSIG_MOB_CTRLSHIFTCLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
 	A.CtrlShiftClick(src)
-	return
 
-/mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+/mob/proc/ShiftMiddleClickOn(atom/A, params)
+	pointed(A, params)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*

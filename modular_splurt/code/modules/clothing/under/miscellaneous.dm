@@ -37,7 +37,7 @@
 
 /obj/item/clothing/under/lumberjack
 	name = "lumberjack outfit"
-	desc = "I am a lumberjack and I am ok, I sleep all night and I work all day."
+	desc = "I am a lumberjack and I am okay, I sleep all night and I work all day."
 	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
 	icon_state = "lumberjack"
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
@@ -46,7 +46,7 @@
 
 /obj/item/clothing/under/bunnysuit
 	name = "bunny outfit"
-	desc = "A simple black bunnt outfit."
+	desc = "A simple black bunny outfit."
 	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
 	icon_state = "bunnysuit"
@@ -54,9 +54,42 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	body_parts_covered = CHEST|GROIN
 
+/obj/item/clothing/under/domina
+	name = "Dominatrix Dress"
+	desc = "This dress makes you feel like you wanna get on all fours and beg for more!"
+	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	icon_state = "domina"
+	item_state = "domina"
+	can_adjust = FALSE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/under/bluedress
+	name = "Blue Royal Dress"
+	desc = "This dress is made with fine blue silks, it also smells of expensive perfumes and oils."
+	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	icon_state = "bluedress"
+	item_state = "bluedress"
+	can_adjust = FALSE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/under/performer
+	name = "Performers one piece"
+	desc = "This outfit smells a bit like cum and lube."
+	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	icon_state = "performer"
+	item_state = "performer"
+	can_adjust = FALSE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	body_parts_covered = CHEST
+
 /obj/item/clothing/under/bunnysuit/white
 	name = "white bunny outfit"
-	desc = "A simple white bunnt outfit."
+	desc = "A simple white bunny outfit."
 	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
 	icon_state = "whitebunnysuit"
@@ -90,7 +123,7 @@
 	item_state = "secstripper"
 	can_adjust = FALSE
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/rank/brigdoc
 	name = "brig physician outfit"
@@ -161,7 +194,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/blueshield
 	name = "head of security's plasma envirosuit helmet"
-	desc = "A plasmaman containment helmet designed for the Bluesheidl, manacing black with blue stripes."
+	desc = "A plasmaman containment helmet designed for the Blueshield, menacing black with blue stripes."
 	icon_state = "bs_envirohelm"
 	item_state = "bs_envirohelm"
 	icon = 'modular_splurt/icons/obj/clothing/head.dmi'
@@ -170,7 +203,7 @@
 
 /obj/item/clothing/under/rank/bridgeofficer
 	name = "bridge officer outfit"
-	desc = "The uniform of a bridge officer. It makes you feel extremly importnant, even if you are not."
+	desc = "The uniform of a bridge officer. It makes you feel extremely important, even if you are not."
 	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
 	icon_state = "bridgesec"
@@ -192,7 +225,7 @@
 
 /obj/item/clothing/under/rank/bridgeofficer/formal
 	name = "bridge officer formal outfit"
-	desc = "The uniform of a bridge officer. Its a formal varaint."
+	desc = "The uniform of a bridge officer. Its a formal variant."
 	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
 	icon_state = "bridgesecformal"
@@ -248,7 +281,7 @@
 
 /obj/item/clothing/under/goner/fake/poly
 	name = "polychromic trencher uniform"
-	desc = "An utilitarian uniform with polychromatic spots."
+	desc = "An utilitarian uniform with polychromic spots."
 	var/list/poly_colors = list("#E6E6E6")
 
 /obj/item/clothing/under/goner/fake/poly/ComponentInitialize()
@@ -274,3 +307,67 @@
 	name = "yellow trencher uniform"
 	desc = "An utilitarian uniform of rugged warfare, with yellow insignias."
 	icon_state = "goner_uniform_y"
+
+/obj/item/clothing/under/misc/gear_harness
+	body_parts_covered = NONE
+
+/obj/item/clothing/under/misc/leia_outfit
+	name = "space princess outfit"
+	desc = "Chain for your Master's erotic asphyxiation not included."
+	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	icon_state = "leia"
+	can_adjust = FALSE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/under/misc/leia_outfit/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#C61818", "#D4AF37"), 2)
+
+/obj/item/clothing/under/performer/polychromic
+	name = "polychromic performers one piece"
+	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	icon_state = "poly_performer"
+
+/obj/item/clothing/under/performer/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#ffffff"), 1)
+
+/obj/item/clothing/under/rank/cargo/miner/lavaland/stripper
+	name = "explorer stripper outfit"
+	desc = "This can't be dress code compliant, can it?"
+	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
+	icon_state = "explorerstripper"
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/uniform.dmi'
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+// Prison Jumpsuit/Jumpskirt override to allow reskins
+/obj/item/clothing/under/rank/prisoner
+	reskin_binding = COMSIG_CLICK_CTRL
+	unique_reskin = list(
+		"max-sec"			= list("icon_state" = "maxprisoner", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi', "anthro_mob_worn_overlay" = 'modular_splurt/icons/mobs/clothing/uniform_digi.dmi'),
+		"high-sec"			= list("icon_state" = "highprisoner", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi', "anthro_mob_worn_overlay" = 'modular_splurt/icons/mobs/clothing/uniform_digi.dmi'),
+		"med-sec"			= list("icon_state" = "prisoner", "icon" = 'icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = null, "anthro_mob_worn_overlay" = null),
+		"low-sec"			= list("icon_state" = "lowprisoner", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi', "anthro_mob_worn_overlay" = 'modular_splurt/icons/mobs/clothing/uniform_digi.dmi'),
+		"prot-sec"			= list("icon_state" = "protprisoner", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi', "anthro_mob_worn_overlay" = 'modular_splurt/icons/mobs/clothing/uniform_digi.dmi'),
+		"vampire"			= list("icon_state" = "blackprisoner", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi', "anthro_mob_worn_overlay" = 'modular_splurt/icons/mobs/clothing/uniform_digi.dmi')
+	)
+
+/obj/item/clothing/under/rank/prisoner/reskin_obj(mob/M)
+	. = ..()
+	name = "prison [current_skin] jumpsuit"
+
+/obj/item/clothing/under/rank/prisoner/skirt
+	unique_reskin = list(
+		"max-sec"			= list("icon_state" = "maxprisoner_skirt", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi'),
+		"high-sec"			= list("icon_state" = "highprisoner_skirt", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi'),
+		"med-sec"			= list("icon_state" = "prisoner_skirt",  "icon" = 'icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = null),
+		"low-sec"			= list("icon_state" = "lowprisoner_skirt", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi'),
+		"prot-sec"			= list("icon_state" = "protprisoner_skirt", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi'),
+		"vampire"			= list("icon_state" = "blackprisoner_skirt", "icon" = 'modular_splurt/icons/obj/clothing/uniforms.dmi', "mob_overlay_icon" = 'modular_splurt/icons/mobs/clothing/uniform.dmi')
+	)
+
+/obj/item/clothing/under/rank/prisoner/skirt/reskin_obj(mob/M)
+	. = ..()
+	name = "prison [current_skin] jumpskirt"

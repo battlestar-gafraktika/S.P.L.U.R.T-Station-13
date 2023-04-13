@@ -6,6 +6,8 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 //Own stuff
+
+/* Already exists
 /obj/item/clothing/under/wedding_dress
 	name = "wedding dress"
 	desc = "A luxurious gown for once-in-a-lifetime occasions."
@@ -15,14 +17,7 @@
 	flags_cover = HIDESHOES
 	mutantrace_variation = NONE
 	can_adjust = FALSE
-
-/obj/item/clothing/under/tuxedo
-	name = "tuxedo"
-	desc = "A formal black tuxedo. It exudes classiness."
-	icon = 'modular_splurt/icons/obj/clothing/uniforms.dmi'
-	icon_state = "tuxedo"
-	mutantrace_variation = NONE //temporary
-	can_adjust = FALSE
+*/
 
 /obj/item/clothing/suit/hooded/wintercoat/security/pink
 	name = "pink security winter coat"
@@ -75,6 +70,34 @@
 	icon_state = "jacket_white"
 	item_state = "jacket_white"
 
+/obj/item/clothing/suit/baroness
+	name = "Baroness Dress"
+	desc = "This dress is stained red due to the bloody history of its previous owner"
+	icon = 'modular_splurt/icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/suit.dmi'
+	icon_state = "baroness"
+	item_state = "baroness"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	flags_inv = HIDESHOES|HIDEUNDERWEAR
+
+/obj/item/clothing/suit/baroness/ladyballat
+	name = "Green Ball Dress"
+	desc = "This dress looks a bit like the one an estranged aunt would wear."
+	icon_state = "ladyballat"
+	item_state = "ladyballat"
+
+/obj/item/clothing/suit/flatwoods
+	name = "Flatwoods Dress"
+	desc = "Despite it's rather simple and cozy look, it seems to be made for someone of at least 10ft."
+	icon = 'modular_splurt/icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/suit.dmi'
+	icon_state = "flatwoods"
+	item_state = "flatwoods"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	flags_inv = HIDESHOES|HIDEUNDERWEAR
+
 /*
  * Posshim's Corpus atire
  */
@@ -87,7 +110,7 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|FEET|HANDS
 	hoodtype = /obj/item/clothing/head/hooded/corpus
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT //"Hide shoes" but digi shoes dont get hidden, too bad!
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT //"Hide shoes" but digi shoes don't get hidden, too bad!
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	mutantrace_variation = NONE //There is no need for a digi variant, it's a costume
 
@@ -124,14 +147,16 @@
 /obj/item/clothing/head/hooded/corpus/c //command
 	icon_state = "corpusc"
 
-/obj/item/clothing/under/rank/civilian/janitor/maid/formal
+/obj/item/clothing/suit/maid
 	name = "Formal maid uniform"
 	desc = "A cozy maid uniform for housekeeping."
 	icon = 'modular_splurt/icons/obj/clothing/suits.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/suit.dmi'
-	fitted = NO_FEMALE_UNIFORM
 	icon_state = "maiddress"
 	item_state = "maiddress"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	flags_inv = HIDESHOES|HIDEUNDERWEAR
 
 /obj/item/clothing/suit/hooded/pyramidhead
 	name = "Pyramid Head apron"
@@ -157,7 +182,7 @@
 // GWTB-inspired stuff wooo
 /obj/item/clothing/suit/goner
 	name = "trencher coat"
-	desc = "A generic trenchcoat of the boring wars. This one have purple, corporate insignias."
+	desc = "A generic trench coat of the boring wars. This one have purple, corporate insignias."
 	icon = 'modular_splurt/icons/obj/clothing/suits.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/suit.dmi'
 	anthro_mob_worn_overlay = 'modular_splurt/icons/mob/clothing/suit_digi.dmi'
@@ -178,7 +203,7 @@
 
 /obj/item/clothing/suit/goner/fake/poly
 	name = "polychromic trencher coat"
-	desc = "A generic, drab olive trenchcoat with polychromatic spots."
+	desc = "A generic, drab olive trench coat with polychromic spots."
 	var/list/poly_colors = list("#E6E6E6", "#D6D6D6", "#D6D6D6")
 
 /obj/item/clothing/suit/goner/fake/poly/ComponentInitialize()
@@ -188,24 +213,34 @@
 /obj/item/clothing/suit/goner/fake/poly/classic
 	name = "classic trencher coat"
 	icon_state = "goner_suit_classic"
-	desc = "A generic, grey coat with polychromatic spots."
+	desc = "A generic, grey coat with polychromic spots."
 
 /obj/item/clothing/suit/goner/red
 	name = "red trencher coat"
-	desc = "A trenchcoat of the boring wars. This one have red insignias."
+	desc = "A trench coat of the boring wars. This one have red insignias."
 	icon_state = "goner_suit_r"
 
 /obj/item/clothing/suit/goner/green
 	name = "green trencher coat"
-	desc = "A trenchcoat of the boring wars. This one have green insignias."
+	desc = "A trench coat of the boring wars. This one have green insignias."
 	icon_state = "goner_suit_g"
 
 /obj/item/clothing/suit/goner/blue
 	name = "blue trencher coat"
-	desc = "A trenchcoat of the boring wars. This one have blue insignias."
+	desc = "A trench coat of the boring wars. This one have blue insignias."
 	icon_state = "goner_suit_b"
 
 /obj/item/clothing/suit/goner/yellow
 	name = "yellow trencher coat"
-	desc = "A trenchcoat of the boring wars. This one have yellow insignias."
+	desc = "A trench coat of the boring wars. This one have yellow insignias."
 	icon_state = "goner_suit_y"
+
+/obj/item/clothing/suit/hooded/corpus/jp //It's him! John Prodman!
+	name = "Strange Voidsuit"
+	desc = "An odd Voidsuit that looks strangely familiar. Has the name 'John' stenciled on it. The shielding module is also intact!"
+	icon_state = "corpus_jp"
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, RAD = 50, FIRE = 50, ACID = 50, WOUND = 50)
+	hoodtype = /obj/item/clothing/head/hooded/corpus/jp
+
+/obj/item/clothing/head/hooded/corpus/jp //sec
+	icon_state = "corpus_jp"

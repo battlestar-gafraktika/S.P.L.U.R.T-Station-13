@@ -4,6 +4,9 @@
 #define LOADOUT_SUBCATEGORY_NONE		"Miscellaneous"
 #define LOADOUT_SUBCATEGORIES_NONE		list("Miscellaneous")
 
+//accessory
+#define LOADOUT_CATEGORY_ACCESSORY "Accessory"
+
 //backpack
 #define LOADOUT_CATEGORY_BACKPACK 				"In backpack"
 #define LOADOUT_SUBCATEGORY_BACKPACK_GENERAL 	"General" //basically anything that there's not enough of to have its own subcategory
@@ -83,7 +86,7 @@
 #define LOADOUT_CAN_DESCRIPTION				(1<<1) //adding a custom description to items
 #define LOADOUT_CAN_COLOR_POLYCHROMIC		(1<<2)
 
-//the names of the customization tabs
+/* the names of the customization tabs
 #define SETTINGS_TAB			0
 #define GAME_PREFERENCES_TAB	1
 #define APPEARANCE_TAB			2
@@ -91,6 +94,7 @@
 #define LOADOUT_TAB				4
 #define CONTENT_PREFERENCES_TAB	5
 #define KEYBINDINGS_TAB			6
+*/
 
 //quirks
 #define QUIRK_POSITIVE	"Positive"

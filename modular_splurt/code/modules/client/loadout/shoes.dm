@@ -3,6 +3,10 @@
 	name = "Cloth Footwraps"
 	path= /obj/item/clothing/shoes/footwraps
 
+/datum/gear/shoes/invisiboots
+	name = "Invisifiber Footwraps"
+	path= /obj/item/clothing/shoes/invisiboots
+
 /datum/gear/shoes/workboots/toeless
 	name = "Toeless Work Boots"
 	path = /obj/item/clothing/shoes/workboots/toeless
@@ -32,3 +36,7 @@
 
 /datum/gear/shoes/puttee
 	restricted_roles = list("Security Officer", "Warden", "Head of Security", "Brig Physician", "Blueshield")
+
+/datum/gear/shoes/highheel_sandals
+	name = "High-heel Sandals"
+	path = /obj/item/clothing/shoes/highheel_sandals

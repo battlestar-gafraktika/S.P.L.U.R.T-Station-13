@@ -1,32 +1,11 @@
 //Main code edits
 /// Allows "cyborg" players to change gender at will - Modularised here
-/mob/living/silicon/robot/verb/toggle_gender()
+// FUNCTION MOVED TO living.dm AS PROC
+/mob/living/silicon/robot/toggle_gender()
 	set name = "Set Gender"
 	set desc = "Allows you to set your gender."
 	set category = "Robot Commands"
-
-	if(stat != CONSCIOUS)
-		to_chat(usr, "<span class='warning'>You cannot toggle your gender while unconcious!</span>")
-		return
-
-	var/choice = tgui_alert(usr, "Select Gender.", "Gender", list("Both", "Male", "Female", "None"))
-	switch(choice)
-		if("Both")
-			has_penis = TRUE
-			has_balls = TRUE
-			has_vagina = TRUE
-		if("Male")
-			has_penis = TRUE
-			has_balls = TRUE
-			has_vagina = FALSE
-		if("Female")
-			has_penis = FALSE
-			has_balls = FALSE
-			has_vagina = TRUE
-		if("None")
-			has_penis = FALSE
-			has_balls = FALSE
-			has_vagina = FALSE
+	change_gender()
 
 // Slaver medical borg
 /mob/living/silicon/robot/modules/syndicate/slaver/medical
@@ -62,3 +41,15 @@
 	laws = new /datum/ai_laws/slaver_override
 	laws.associate(src)
 	update_icons()
+
+/mob/living/silicon/robot/Initialize(mapload)
+	.=..()
+	AddComponent(/datum/component/personal_crafting)
+
+
+/mob/living/silicon/robot/pick_module()
+	.=..()
+	var/datum/hud/R = hud_used
+	var/atom/movable/screen/craft/C = locate() in R.static_inventory
+	C.icon = 'icons/mob/screen_midnight.dmi'
+	C.screen_loc = "CENTER+5:5,SOUTH+1:5"

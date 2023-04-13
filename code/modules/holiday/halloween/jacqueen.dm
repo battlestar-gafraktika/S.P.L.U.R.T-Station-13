@@ -15,6 +15,8 @@
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_HOLIDAY
+	description = "Spawns Jacq, a friendly mob that gives players a couple fun stuff to do."
 
 /datum/round_event/jacqueen/start()
 	..()
@@ -219,23 +221,11 @@
 /mob/living/simple_animal/jacq/proc/treat(mob/living/carbon/C, gender)
 	visible_message("<b>[src]</b> gives off a glowing smile, <span class='spooky'>\"What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.\"</span>")
 	jacqrunes("What ken Ah offer ye? I can magic up an object, a potion or a plushie fer ye.", C)
-	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?", "Become a pumpkinhead dullahan (perma) - 4 candies")
+	var/choices_reward = list("Object - 3 candies", "Potion - 2 candies", "Jacqueline Tracker - 2 candies", "Plushie - 1 candy", "Can I get to know you instead?")
 	var/choice_reward = input(usr, "Trick or Treat?", "Trick or Treat?") in choices_reward
 
 	//rewards
 	switch(choice_reward)
-		if("Become a pumpkinhead dullahan (perma) - 4 candies")
-			if(!take_candies(C, 4))
-				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 4 candies for that [gender]! Thems the rules!\"</span>")
-				jacqrunes("It's 4 candies for that [gender]! Thems the rules!", C)
-				return
-			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Off comes your head, a pumpkin taking it's stead!\"</span>")
-			jacqrunes("Off comes your head, a pumpkin taking it's stead!", C)
-			C.reagents.add_reagent(/datum/reagent/mutationtoxin/pumpkinhead, 5)
-			sleep(20)
-			poof()
-			return
-
 		if("Object - 3 candies")
 			if(!take_candies(C, 3))
 				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 3 candies per trinket [gender]! Thems the rules!\"</span>")
@@ -409,10 +399,12 @@
 
 /mob/living/simple_animal/jacq/proc/trick(mob/living/carbon/C, gender)
 	var/option
-	if(ishuman(C))
-		option = rand(1,6)
+	if(ishuman(C) && (C.gender == MALE || C.gender == FEMALE))
+		option = rand(1,8)
+	else if (ishuman(C))
+		option = rand(1,7)
 	else
-		option = rand(1,5)
+		option = rand(1,6)
 	switch(option)
 		if(1)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Hocus pocus, making friends is now your focus!\"</span>")
@@ -442,6 +434,10 @@
 			jacqrunes("A new familiar for me, and you'll see it's thee!", C)
 			C.reagents.add_reagent(/datum/reagent/fermi/secretcatchem, 30)
 		if(6)
+			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"There will be some fun on this night, go on and find someone you like!\"</span>")
+			jacqrunes("There will be some fun on this night, go on and find someone you like!", C)
+			C.reagents.add_reagent(/datum/reagent/drug/aphrodisiacplus, 15)
+		if(7)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"While you may not be a ghost, for this sheet you'll always be it's host.\"</span>")
 			jacqrunes("While you may not be a ghost, for this sheet you'll always be it's host.", C)
 			var/mob/living/carbon/human/H = C
@@ -450,6 +446,10 @@
 				H.dropItemToGround(W, TRUE)
 			var/ghost = new /obj/item/clothing/suit/ghost_sheet/sticky
 			H.equip_to_slot(ghost, ITEM_SLOT_OCLOTHING, 1, 1)
+		if(8)
+			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Who cares, it's lad or lass? You'll take a new life glanсe!\"</span>")
+			jacqrunes("Who cares, it's lad or lass? You'll take a new life glanсe!", C)
+			C.set_gender(C.gender == MALE ? FEMALE : MALE)
 	poof()
 
 //Blame Fel
@@ -687,12 +687,6 @@
 		return
 	else
 		..()
-
-/datum/reagent/mutationtoxin/pumpkinhead
-	name = "Pumpkin head mutation toxin"
-	race = /datum/species/dullahan/pumpkin
-	mutationtext = "<span class='spooky'>The pain subsides. You feel your head roll off your shoulders... and you smell pumpkin."
-	//I couldn't get the replace head sprite with a pumpkin to work so, it is what it is.
 
 /mob/living/simple_animal/jacq/proc/check_candies(mob/living/carbon/C)
 	var/invs = C.get_contents()

@@ -215,6 +215,15 @@
 	cost = 100000
 	contains = list(/obj/item/reagent_containers/food/drinks/diminicillin)
 
+/datum/supply_pack/misc/plushmium
+	name = "Plushmium Crate"
+	desc = "Surplus shipment of Stuffing For Spessmen backer rewards. Contains a pre-packaged spray bottle of Plushmium, and toy to use it on."
+	cost = 5000 // Cost of an expensive animal
+	contains = list(
+		/obj/item/storage/box/shipment_plushmium,
+		/obj/item/choice_beacon/box/plushie
+	)
+
 /datum/supply_pack/misc/microbricks
 	name = "Microbricks Crate"
 	desc = "Extremely bored? Recreate a downscale city and get upset when it all comes crumbling down!"
@@ -241,18 +250,19 @@
 					/obj/item/wrench)
 	crate_name = "stripper pole crate"
 
+
 /datum/supply_pack/misc/wedding
-	name = "Wedding Crate"
+	name = "Small Wedding Crate"
 	desc = "Almost everything you need to host a wedding! Don't forget a ring!"
 	cost = 1500
-	contains = list(/obj/item/clothing/under/wedding_dress,
-					/obj/item/clothing/under/tuxedo,
+	contains = list(/obj/item/clothing/under/dress/wedding,
+					/obj/item/clothing/under/suit/tuxedo,
 					/obj/item/storage/belt/cummerbund,
 					/obj/item/bouquet,
 					/obj/item/bouquet/sunflower,
 					/obj/item/bouquet/poppy,
 					/obj/item/reagent_containers/food/drinks/bottle/champagne)
-	crate_name = "wedding crate"
+	crate_name = "small wedding crate"
 
 /datum/supply_pack/misc/random1k
 	name = "1k Surplus Crate"

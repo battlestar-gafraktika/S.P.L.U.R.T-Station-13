@@ -22,7 +22,7 @@
 //Own stuff
 /obj/item/clothing/head/helmet/space/hardsuit/rd/hev
 	name = "HEV Suit helmet"
-	desc = "A Hazardous Environment Helmet. It fits snug over the suit and has a heads-up display for researchers. The flashlight seems broken, fitting considering this was made before the start of the milennium."
+	desc = "A Hazardous Environment Helmet. It fits snug over the suit and has a heads-up display for researchers. The flashlight seems broken, fitting considering this was made before the start of the millennium."
 	icon = 'modular_splurt/icons/obj/clothing/hats.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/head.dmi'
 	anthro_mob_worn_overlay = 'modular_splurt/icons/mob/clothing/head_muzzled.dmi'
@@ -38,7 +38,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/rd/hev
 	name = "HEV Suit"
-	desc = "The hazard suit. It was designed to protect scientists from the blunt trauma, radiation, energy discharge that hazardous materials might produce or entail. Fits you like a glove. The automatic medical system seems broken... They're waiting for you, Gordon. In the test chamberrrrrr."
+	desc = "The hazard suit. It was designed to protect scientists from the blunt trauma, radiation, energy discharge that hazardous materials might produce or entail. Fits you like a glove. The automatic medical system seems broken... They're waiting for you, Gordon. In the test chamber."
 	icon = 'modular_splurt/icons/obj/clothing/suits.dmi'
 	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/suit.dmi'
 	anthro_mob_worn_overlay = 'modular_splurt/icons/mob/clothing/suit_digi.dmi'
@@ -157,9 +157,9 @@
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s Tesla Power Armor are still recharging! The armor merely emits some sparks.</span>")
+			owner.visible_message(span_danger("The tesla capacitors on [owner]'s Tesla Power Armor are still recharging! The armor merely emits some sparks."))
 			return
-		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out arcs of lightning!</span>")
+		owner.visible_message(span_danger("[src] blocks [attack_text], sending out arcs of lightning!"))
 		if(!legacy)
 			tesla_zap(owner, tesla_range, tesla_power, tesla_flags)
 		else
@@ -218,3 +218,30 @@
 	armor = list("melee" = 95, "bullet" = 90, "laser" = 70, "energy" = 80, "bomb" = 70, "bio" = 100, "rad" = 40, "fire" = 100, "acid" = 100)
 	strip_delay = 300
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/head/helmet/space/hardsuit/corpus
+	name = "Corpus Ranger Helmet"
+	desc = "The helmet component of a Corpus Ranger hardsuit, has a flashlight!."
+	icon = 'modular_splurt/icons/obj/clothing/hats.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/head.dmi'
+	icon_state = "hardsuit0-corpus"
+	item_state = "hardsuit0-corpus"
+	armor = list(MELEE = 10, BULLET = 5, LASER = 10, ENERGY = 5, BOMB = 10, BIO = 100, RAD = 75, FIRE = 50, ACID = 75, WOUND = 10)
+	strip_delay = 300
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	hardsuit_type = "corpus"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+
+/obj/item/clothing/suit/space/hardsuit/corpus
+	name = "Corpus Ranger Hardsuit"
+	desc = "A specially designed Corpus hardsuit that protects against space. Has energy shielding, though the device has faltered slightly with age."
+	icon = 'modular_splurt/icons/obj/clothing/suits.dmi'
+	mob_overlay_icon = 'modular_splurt/icons/mob/clothing/suit.dmi'
+	icon_state = "hardsuit-corpus"
+	item_state = "hardsuit-corpus"
+	max_integrity = 300
+	armor = list(MELEE = 15, BULLET = 10, LASER = 15, ENERGY = 10, BOMB = 10, BIO = 100, RAD = 100, FIRE = 50, ACID = 75, WOUND = 15)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
+	siemens_coefficient = 0
+	actions_types = list(/datum/action/item_action/toggle_helmet)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/corpus
